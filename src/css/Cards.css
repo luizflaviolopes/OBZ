@@ -1,3 +1,37 @@
-.card-w-limit {
+.card-decision {
+  font-size: x-small;
   width: 30%;
+  text-align: center;
 }
+.card-decision p:last-child
+{
+  color:red;
+}
+
+.card-decision.opened{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+
+div.backdrop{
+  background-color:rgba(128, 128, 128, 0.336);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+div.card-content{
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
+.button-icon{
+  margin-left: 8px;
+}
+

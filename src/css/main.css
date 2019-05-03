@@ -8,12 +8,14 @@
   border-radius: 5px;
   height: 100%;
   padding: 5%;
+  position: relative;
 }
 
 .pilha-container {
   height: 100%;
   width: 30%;
 }
+
 
 .fullHeigth {
   height: 100%;
