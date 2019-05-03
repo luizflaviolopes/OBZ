@@ -1,14 +1,9 @@
 .card-decision {
   font-size: x-small;
   width: 30%;
-  text-align: center;
-}
-.card-decision p:last-child
-{
-  color:red;
 }
 
-.card-decision.opened{
+.card-decision.opened {
   position: absolute;
   top: 0;
   left: 0;
@@ -16,9 +11,8 @@
   width: 100%;
 }
 
-
-div.backdrop{
-  background-color:rgba(128, 128, 128, 0.336);
+div.backdrop {
+  background-color: rgba(128, 128, 128, 0.336);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -26,12 +20,47 @@ div.backdrop{
   right: 0;
 }
 
-div.card-content{
-  cursor: pointer;
-  padding: 0.2rem;
+.card-resume {
+  font-size: x-small;
+  width: 30%;
+  text-align: center;
 }
 
-.button-icon{
+div.card-content {
+  cursor: pointer;
+  padding: 0.2rem;
+  text-align: center;
+}
+
+.button-icon {
   margin-left: 8px;
 }
 
+.card-footer {
+  text-align: right;
+  padding: 0 0 0 0.5rem;
+}
+
+.card-propertie {
+  display: inline-block;
+  margin: 0.5em 0;
+}
+
+.price {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: red;
+}
+
+.card-propertie span:last-child {
+  margin-left: 0.5rem;
+}
+
+.card-propertie span:first-child {
+  font-size: 1.3em;
+  font-weight: 700;
+}
+
+.card-header {
+  text-align: center;
+}
