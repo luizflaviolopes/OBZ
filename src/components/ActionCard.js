@@ -31,7 +31,10 @@ export class ActionCard extends React.Component {
               padding: "0.7rem"
             }}
           >
-            <div className="card-header">
+            <div
+              className="card-header"
+              style={{ backgroundColor: this.props.color.fill }}
+            >
               <h2>{this.props.UnidadeAdmin}</h2>
             </div>
             <hr />
@@ -79,10 +82,17 @@ export class ActionCard extends React.Component {
             onClick={this.handleClickToggle}
             className="card-content"
           >
-            <h4>{this.props.Entrega}</h4>
-            <hr />
-            <p>{this.props.Resumo}</p>
-            <p>({this.props.PrecoTotal})</p>
+            <div
+              className="card-header"
+              style={{ backgroundColor: this.props.color.fill }}
+            >
+              <h4>{this.props.Entrega}</h4>
+            </div>
+
+            <div className="card-body">
+              <p>{this.props.Resumo}</p>
+              <p>({this.props.PrecoTotal})</p>
+            </div>
           </Paper>
         </Grid>
       );
@@ -94,10 +104,17 @@ export class ActionCard extends React.Component {
             onClick={this.handleClickToggle}
             className="card-content"
           >
-            <h4>{this.props.Entrega}</h4>
-            <hr />
-            <p>{this.props.Resumo}</p>
-            <p>({this.props.PrecoTotal})</p>
+            <div
+              className="card-header"
+              style={{ backgroundColor: this.props.color.fill }}
+            >
+              <h4>{this.props.Entrega}</h4>
+            </div>
+
+            <div className="card-body">
+              <p>{this.props.Resumo}</p>
+              <p>({this.props.PrecoTotal})</p>
+            </div>
           </Paper>
         </Grid>
       );

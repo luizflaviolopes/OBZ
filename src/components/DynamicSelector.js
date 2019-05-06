@@ -19,25 +19,7 @@ var groupBy = function(xs, key) {
 export class DynamicSelector extends React.Component {
   constructor(props) {
     super(props);
-    let startData = groupBy(
-      d.sort(function(a, b) {
-        return a - b;
-      }),
-      "Entrega"
-    );
-    this.state = {
-      initialData: startData,
-      DataHistory: [{ toSelect: startData, selected: [] }]
-    };
-    this.getLastData = this.getLastData.bind(this);
-    this.handleToStack = this.handleToStack.bind(this);
-  }
 
-  getLastData() {
-    return this.state.DataHistory[this.state.DataHistory.length - 1];
-  }
-
-  handleToStack(item) {
     function generateColor() {
       let red = Math.floor(Math.random() * 155 + 100).toString();
       let green = Math.floor(Math.random() * 155 + 100).toString();
@@ -55,12 +37,38 @@ export class DynamicSelector extends React.Component {
       };
     }
 
+    let startData = groupBy(
+      d.sort(function(a, b) {
+        return a - b;
+      }),
+      "Entrega"
+    );
+
+    Object.keys(startData).forEach(function(a, i) {
+      let Color = generateColor();
+
+      startData[a].forEach(function(i, j) {
+        i.color = Color;
+      });
+    });
+
+    this.state = {
+      initialData: startData,
+      DataHistory: [{ toSelect: startData, selected: [] }]
+    };
+    this.getLastData = this.getLastData.bind(this);
+    this.handleToStack = this.handleToStack.bind(this);
+  }
+
+  getLastData() {
+    return this.state.DataHistory[this.state.DataHistory.length - 1];
+  }
+
+  handleToStack(item) {
     const history = this.state.DataHistory;
     let current = Object.assign({}, history[history.length - 1]);
     let toStack = current.toSelect[item].shift();
     current.selected.push(toStack);
-
-    toStack.color = generateColor();
 
     if (current.toSelect[item].length === 0) delete current.toSelect[item];
 

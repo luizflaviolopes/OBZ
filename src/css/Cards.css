@@ -28,8 +28,11 @@ div.backdrop {
 
 div.card-content {
   cursor: pointer;
-  padding: 0.2rem;
   text-align: center;
+}
+
+div.card-content .card-body {
+  padding: 2px;
 }
 
 .button-icon {
@@ -63,4 +66,7 @@ div.card-content {
 
 .card-header {
   text-align: center;
+  padding: 0.7em 0.7em;
+  background-color: gray;
+  border-radius: 5px 5px 0 0;
 }
