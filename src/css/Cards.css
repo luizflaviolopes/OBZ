@@ -45,7 +45,7 @@ div.card-content .card-body {
 }
 
 .card-propertie {
-  display: inline-block;
+  display: block;
   margin: 0.5em 0;
 }
 
@@ -55,13 +55,19 @@ div.card-content .card-body {
   color: red;
 }
 
-.card-propertie span:last-child {
-  margin-left: 0.5rem;
+.card-propertie > div {
+  display: table-cell;
 }
 
-.card-propertie span:first-child {
+.card-propertie span {
+  margin-right: 0.5rem;
   font-size: 1.3em;
   font-weight: 700;
+}
+
+.card-propertie p {
+  display: table-cell;
+  text-align: justify;
 }
 
 .card-header {

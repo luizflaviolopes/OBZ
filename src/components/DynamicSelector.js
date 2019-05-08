@@ -94,7 +94,7 @@ export class DynamicSelector extends React.Component {
             justify="center"
             direction="row"
           >
-            <Grid container spacing={16} alignItems="center">
+            <Grid container spacing={16} alignItems="flex-start">
               {objects.map(function(i, a) {
                 return (
                   <ActionCard

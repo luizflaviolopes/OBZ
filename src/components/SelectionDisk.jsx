@@ -4,6 +4,7 @@ export class SelectionDisk extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      ...this.props,
       textReduced: this.props.Detalhamento.substring(0, 30) + "..."
     };
   }
@@ -11,6 +12,7 @@ export class SelectionDisk extends React.Component {
   render() {
     return (
       <g
+        onClick={evt => this.props.onDetail(this.state, evt.target)}
         style={{
           transform: "translate(0px,-" + this.props.position * 50 + "px)"
         }}

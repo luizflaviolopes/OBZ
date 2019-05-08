@@ -1,18 +1,34 @@
 import React from "react";
 import { SelectionDisk } from "./SelectionDisk";
+import { Tooltip } from "./Tooltip";
 
 export class FinalStack extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { stack: this.props.selecteds };
+    this.state = { stack: this.props.selecteds, tooltipParams: null };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(obj, elem) {
+    window.teste = elem;
+    let newParams = { element: elem, ...obj };
+    this.setState({ tooltipParams: newParams });
   }
 
   render() {
     let nStackItens = this.state.stack.length;
-
+    let _this = this;
     let totalline;
+    let tooltip;
 
-    window.selected = this.state.stack;
+    if (this.state.tooltipParams != null) {
+      tooltip = (
+        <Tooltip
+          {...this.state.tooltipParams}
+          onClose={() => this.setState({ tooltipParams: null })}
+        />
+      );
+    }
 
     if (nStackItens > 0) {
       let soma = this.state.stack.reduce(
@@ -75,25 +91,35 @@ export class FinalStack extends React.Component {
     }
 
     return (
-      <svg
-        height="100%"
-        width="100%"
-        viewBox="0 0 500 800"
-        preserveAspectRatio="xMinYMin meet"
-      >
-        <g
-          style={{
-            transform: "translate(100px," + (300 + nStackItens * 20) + "px)"
-          }}
+      <div>
+        <svg
+          height="100%"
+          width="100%"
+          viewBox="0 0 500 800"
+          preserveAspectRatio="xMinYMin meet"
         >
-          <g>
-            {this.state.stack.map(function(i, a) {
-              return <SelectionDisk {...i} key={a} position={a} />;
-            })}
+          <g
+            style={{
+              transform: "translate(100px," + (300 + nStackItens * 20) + "px)"
+            }}
+          >
+            <g>
+              {this.state.stack.map(function(i, a) {
+                return (
+                  <SelectionDisk
+                    {...i}
+                    key={a}
+                    position={a}
+                    onDetail={_this.handleClick}
+                  />
+                );
+              })}
+            </g>
+            {totalline}
           </g>
-          {totalline}
-        </g>
-      </svg>
+        </svg>
+        {tooltip}
+      </div>
     );
   }
 }

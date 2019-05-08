@@ -39,29 +39,40 @@ export class ActionCard extends React.Component {
             </div>
             <hr />
             <div className="card-propertie">
-              <span>Entrega:</span>
-              <span>{this.props.Entrega}</span>
+              <div>
+                <span>Entrega:</span>
+              </div>
+              <p>{this.props.Entrega}</p>
             </div>
             <div className="card-propertie">
-              <span>Detalhamento:</span>
-
-              <span>{this.props.Detalhamento}</span>
+              <div>
+                <span>Detalhamento:</span>
+              </div>
+              <p>{this.props.Detalhamento}</p>
             </div>
             <div className="card-propertie">
-              <span>Justificativa:</span>
-              <span>{this.props.Justificativa}</span>
+              <div>
+                <span>Justificativa:</span>
+              </div>
+              <p>{this.props.Justificativa}</p>
             </div>
             <div className="card-propertie">
-              <span>ItemCusto:</span>
-              <span>{this.props.ItemCusto}</span>
+              <div>
+                <span>ItemCusto:</span>
+              </div>
+              <p>{this.props.ItemCusto}</p>
             </div>
             <div className="card-propertie">
-              <span>Resumo:</span>
-              <span>{this.props.Resumo}</span>
+              <div>
+                <span>Resumo:</span>
+              </div>
+              <p>{this.props.Resumo}</p>
             </div>
             <div className="card-propertie price">
-              <span>PrecoTotal:</span>
-              <span>{this.props.PrecoTotal}</span>
+              <div>
+                <span>PrecoTotal:</span>
+              </div>
+              <p>{this.props.PrecoTotal}</p>
             </div>
             <hr />
             <div className="card-footer">
