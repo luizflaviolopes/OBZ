@@ -2,3 +2,6 @@
   position: absolute;
   top: 0;
 }
+.tooltip::after{
+border-left: 5rem solid black;
+}

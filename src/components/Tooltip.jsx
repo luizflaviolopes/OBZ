@@ -24,6 +24,7 @@ export class Tooltip extends React.Component {
             padding: "0.7rem",
             transform: "translateY(-40%)"
           }}
+          className="tooltip"
         >
           <div
             className="card-header"
