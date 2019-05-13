@@ -124,3 +124,5 @@ export class DynamicSelector extends React.Component {
     );
   }
 }
+
+export default DynamicSelector;
