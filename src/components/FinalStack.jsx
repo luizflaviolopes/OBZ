@@ -9,6 +9,12 @@ export class FinalStack extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+
+componentDidUpdate(oldProps){
+  if(this.props.selecteds !== oldProps.selecteds)
+  this.setState({stack: this.props.selecteds});
+}
+
   handleClick(obj, elem) {
     window.teste = elem;
     let newParams = { element: elem, ...obj };

@@ -1,22 +1,34 @@
 import React from "react";
+import { withStyles } from '@material-ui/core/styles';
 import { data } from "../Json";
 import { ActionCard } from "./ActionCard";
-import { Grid } from "@material-ui/core";
+import { Grid, Fab } from "@material-ui/core";
 import { SelectionDisk } from "./SelectionDisk";
 import "../css/svg.css";
 import { FinalStack } from "./FinalStack";
+import Undo from '@material-ui/icons/Undo';
+import Redo from '@material-ui/icons/Redo';
 
 var d = data;
 window.dados = d;
 
-var groupBy = function(xs, key) {
-  return xs.reduce(function(rv, x) {
+var groupBy = function (xs, key) {
+  return xs.reduce(function (rv, x) {
     (rv[x[key]] = rv[x[key]] || []).push(x);
     return rv;
   }, {});
 };
 
-export class DynamicSelector extends React.Component {
+const styles = theme => ({
+  fab: {
+    margin: theme.spacing.unit,
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit,
+  },
+});
+
+class DynamicSelector extends React.Component {
   constructor(props) {
     super(props);
 
@@ -38,26 +50,47 @@ export class DynamicSelector extends React.Component {
     }
 
     let startData = groupBy(
-      d.sort(function(a, b) {
+      d.sort(function (a, b) {
         return a - b;
       }),
       "Entrega"
     );
 
-    Object.keys(startData).forEach(function(a, i) {
+    Object.keys(startData).forEach(function (a, i) {
       let Color = generateColor();
 
-      startData[a].forEach(function(i, j) {
+      startData[a].forEach(function (i, j) {
         i.color = Color;
       });
     });
 
     this.state = {
       initialData: startData,
-      DataHistory: [{ toSelect: startData, selected: [] }]
+      DataHistory: [{ toSelect: startData, selected: [] }],
+      Backed: []
     };
     this.getLastData = this.getLastData.bind(this);
     this.handleToStack = this.handleToStack.bind(this);
+    this.undo = this.undo.bind(this);
+    this.redo = this.redo.bind(this);
+  }
+
+  undo() {
+    console.log(this.state.DataHistory)
+    if (this.state.DataHistory.length > 1) {
+      let history = [...this.state.DataHistory]
+      let toUndo = history.pop();
+      console.log(history)
+      this.setState({ DataHistory: history, Backed: this.state.Backed.concat(toUndo) });
+    }
+  }
+
+  redo() {
+    if (this.state.Backed.length > 0) {
+      const history = this.state.DataHistory;
+      let toRedo = this.state.Backed.pop();
+      this.setState({ DataHistory: history.concat(toRedo) });
+    }
   }
 
   getLastData() {
@@ -65,22 +98,24 @@ export class DynamicSelector extends React.Component {
   }
 
   handleToStack(item) {
-    const history = this.state.DataHistory;
-    let current = Object.assign({}, history[history.length - 1]);
+    let history = this.state.DataHistory;
+    let c = history[history.length - 1];
+    let current = { ...c };
     let toStack = current.toSelect[item].shift();
-    current.selected.push(toStack);
+    current.selected = [...current.selected, toStack];
 
     if (current.toSelect[item].length === 0) delete current.toSelect[item];
 
-    this.setState({ DataHistory: history.concat([current]) });
+    this.setState({ DataHistory: [...this.state.DataHistory, current], Backed: [] });
   }
 
   render() {
+    const { classes } = this.props;
     let lastState = this.getLastData();
     let self = this;
     let objects = [];
-
-    Object.keys(lastState.toSelect).forEach(function(i, a) {
+    console.log(lastState.selected)
+    Object.keys(lastState.toSelect).forEach(function (i, a) {
       objects.push(lastState.toSelect[i][0]);
     });
 
@@ -95,7 +130,7 @@ export class DynamicSelector extends React.Component {
             direction="row"
           >
             <Grid container spacing={16} alignItems="flex-start">
-              {objects.map(function(i, a) {
+              {objects.map(function (i, a) {
                 return (
                   <ActionCard
                     {...i}
@@ -120,9 +155,18 @@ export class DynamicSelector extends React.Component {
             </Grid>
           </Grid>
         </Grid>
+        <div style={{ position: "absolute", right: 0, bottom: 0 }}>
+          <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.undo}>
+            <Undo />
+          </Fab>
+          <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.redo}>
+            <Redo />
+          </Fab>
+        </div>
       </Grid>
     );
   }
 }
 
-export default DynamicSelector;
+
+export default withStyles(styles)(DynamicSelector);
