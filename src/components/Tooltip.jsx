@@ -30,44 +30,44 @@ export class Tooltip extends React.Component {
             className="card-header"
             style={{ backgroundColor: this.props.color.fill }}
           >
-            <h2>{this.props.UnidadeAdmin}</h2>
+            <h2>{this.props.unAdm}</h2>
           </div>
           <hr />
           <div className="card-propertie">
             <div>
               <span>Entrega:</span>
             </div>
-            <p>{this.props.Entrega}</p>
+            <p>{this.props.entrega}</p>
           </div>
           <div className="card-propertie">
             <div>
               <span>Detalhamento:</span>
             </div>
-            <p>{this.props.Detalhamento}</p>
+            <p>{this.props.detalhamento}</p>
           </div>
           <div className="card-propertie">
             <div>
               <span>Justificativa:</span>
             </div>
-            <p>{this.props.Justificativa}</p>
+            <p>{this.props.justificativa}</p>
           </div>
           <div className="card-propertie">
             <div>
               <span>ItemCusto:</span>
             </div>
-            <p>{this.props.ItemCusto}</p>
+            <p>{this.props.itemCusto}</p>
           </div>
           <div className="card-propertie">
             <div>
               <span>Resumo:</span>
             </div>
-            <p>{this.props.Resumo}</p>
+            <p>{this.props.resumo}</p>
           </div>
           <div className="card-propertie price">
             <div>
               <span>PrecoTotal:</span>
             </div>
-            <p>{this.props.PrecoTotal}</p>
+            <p>{this.props.precoTotal}</p>
           </div>
           <hr />
           <div className="card-footer" />

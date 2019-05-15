@@ -23,7 +23,7 @@ const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={Login} />
-      <Route path="/Stack/:un" component={DynamicSelector} />
+      <PrivateRoute path="/Stack/:un" component={DynamicSelector} />
       <PrivateRoute path="/Unidades" component={Unidades} />
       <Route path="*" component={Login} />
     </Switch>

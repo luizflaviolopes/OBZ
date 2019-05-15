@@ -23,7 +23,7 @@ export class ActionCard extends React.Component {
             elevation={1}
             style={{
               position: "absolute",
-              top: "4rem",
+              top: window.pageYOffset + 60,
               left: "0",
               right: 0,
               margin: "auto",
@@ -35,44 +35,54 @@ export class ActionCard extends React.Component {
               className="card-header"
               style={{ backgroundColor: this.props.color.fill }}
             >
-              <h2>{this.props.UnidadeAdmin}</h2>
+              <h2>{this.props.unAdm}</h2>
             </div>
             <hr />
             <div className="card-propertie">
               <div>
                 <span>Entrega:</span>
               </div>
-              <p>{this.props.Entrega}</p>
+              <p>{this.props.entrega}</p>
             </div>
             <div className="card-propertie">
               <div>
                 <span>Detalhamento:</span>
               </div>
-              <p>{this.props.Detalhamento}</p>
+              <p>{this.props.detalhamento}</p>
             </div>
             <div className="card-propertie">
               <div>
                 <span>Justificativa:</span>
               </div>
-              <p>{this.props.Justificativa}</p>
+              <p>{this.props.justificativa}</p>
             </div>
             <div className="card-propertie">
               <div>
                 <span>ItemCusto:</span>
               </div>
-              <p>{this.props.ItemCusto}</p>
+              <p>
+                <ul>
+                  {this.props.itens.map(function(a, i) {
+                    return (
+                      <li>
+                        {a.itemCusto} - R$ {a.valUn.toLocaleString()}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </p>
             </div>
             <div className="card-propertie">
               <div>
                 <span>Resumo:</span>
               </div>
-              <p>{this.props.Resumo}</p>
+              <p>{this.props.resumo}</p>
             </div>
             <div className="card-propertie price">
               <div>
                 <span>PrecoTotal:</span>
               </div>
-              <p>{this.props.PrecoTotal}</p>
+              <p>{this.props.valorTotal.toLocaleString()}</p>
             </div>
             <hr />
             <div className="card-footer">
@@ -81,7 +91,7 @@ export class ActionCard extends React.Component {
                 size="medium"
                 color="primary"
                 aria-label="Add"
-                onClick={() => this.props.sendToStack(this.props.Entrega)}
+                onClick={() => this.props.sendToStack(this.props.entrega)}
               >
                 Selecionar
                 <Send className="button-icon" />
@@ -97,12 +107,12 @@ export class ActionCard extends React.Component {
               className="card-header"
               style={{ backgroundColor: this.props.color.fill }}
             >
-              <h4>{this.props.Entrega}</h4>
+              <h4>{this.props.unAdm}</h4>
             </div>
 
             <div className="card-body">
-              <p>{this.props.Resumo}</p>
-              <p>({this.props.PrecoTotal})</p>
+              <p>{this.props.entrega}</p>
+              <p>{this.props.valorTotal.toLocaleString()}</p>
             </div>
           </Paper>
         </Grid>
@@ -119,12 +129,12 @@ export class ActionCard extends React.Component {
               className="card-header"
               style={{ backgroundColor: this.props.color.fill }}
             >
-              <h4>{this.props.Entrega}</h4>
+              <h4>{this.props.unAdm}</h4>
             </div>
 
             <div className="card-body">
-              <p>{this.props.Resumo}</p>
-              <p>({this.props.PrecoTotal})</p>
+              <p>{this.props.entrega}</p>
+              <p>{this.props.valorTotal.toLocaleString()}</p>
             </div>
           </Paper>
         </Grid>

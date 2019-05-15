@@ -38,7 +38,11 @@ export class Unidades extends React.Component {
         {this.state.unidades.map(function(a, i) {
           return (
             <Chip
-              avatar={<Avatar style={{ width: "auto" }}>{a.sigla}</Avatar>}
+              avatar={
+                <Avatar style={{ width: "auto", minWidth: "2rem" }}>
+                  {a.sigla}
+                </Avatar>
+              }
               label={a.nome}
               clickable
               color="primary"

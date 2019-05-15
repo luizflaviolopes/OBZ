@@ -5,7 +5,7 @@ export class SelectionDisk extends React.Component {
     super(props);
     this.state = {
       ...this.props,
-      textReduced: this.props.Detalhamento.substring(0, 30) + "..."
+      textReduced: this.props.detalhamento.substring(0, 30) + "..."
     };
   }
 

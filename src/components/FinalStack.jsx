@@ -1,6 +1,7 @@
 import React from "react";
 import { SelectionDisk } from "./SelectionDisk";
 import { Tooltip } from "./Tooltip";
+import { Scrollbars } from "react-custom-scrollbars";
 
 export class FinalStack extends React.Component {
   constructor(props) {
@@ -9,11 +10,10 @@ export class FinalStack extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-
-componentDidUpdate(oldProps){
-  if(this.props.selecteds !== oldProps.selecteds)
-  this.setState({stack: this.props.selecteds});
-}
+  componentDidUpdate(oldProps) {
+    if (this.props.selecteds !== oldProps.selecteds)
+      this.setState({ stack: this.props.selecteds });
+  }
 
   handleClick(obj, elem) {
     window.teste = elem;
@@ -37,18 +37,7 @@ componentDidUpdate(oldProps){
     }
 
     if (nStackItens > 0) {
-      let soma = this.state.stack.reduce(
-        (a, b) =>
-          a +
-          (b.PrecoTotal
-            ? parseFloat(
-                b.PrecoTotal.replace(/[a-zA-Z$]/g, "")
-                  .replace(/[.]/g, "")
-                  .replace(",", ".")
-              )
-            : 0),
-        0
-      );
+      let soma = this.state.stack.reduce((a, b) => a + b.valorTotal, 0);
 
       totalline = (
         <g>
@@ -97,33 +86,45 @@ componentDidUpdate(oldProps){
     }
 
     return (
-      <div>
-        <svg
-          height="100%"
-          width="100%"
-          viewBox="0 0 500 800"
-          preserveAspectRatio="xMinYMin meet"
-        >
-          <g
-            style={{
-              transform: "translate(100px," + (300 + nStackItens * 20) + "px)"
-            }}
+      <div style={{ position: "inherit", width: "100%", height: "100vh" }}>
+        <Scrollbars style={{ width: "100%", height: "100%" }}>
+          <svg
+            height={nStackItens > 10 ? 300 + nStackItens * 50 : "100%"}
+            width="100%"
+            viewBox="0 0 500 800"
+            preserveAspectRatio="xMinYMin meet"
           >
-            <g>
-              {this.state.stack.map(function(i, a) {
-                return (
-                  <SelectionDisk
-                    {...i}
-                    key={a}
-                    position={a}
-                    onDetail={_this.handleClick}
-                  />
-                );
-              })}
+            <g
+              style={
+                nStackItens > 10
+                  ? {
+                      transform:
+                        "translate(100px," +
+                        (300 + nStackItens * 20 + (nStackItens - 10) * 30) +
+                        "px)"
+                    }
+                  : {
+                      transform:
+                        "translate(100px," + (300 + nStackItens * 20) + "px)"
+                    }
+              }
+            >
+              <g>
+                {this.state.stack.map(function(i, a) {
+                  return (
+                    <SelectionDisk
+                      {...i}
+                      key={a}
+                      position={a}
+                      onDetail={_this.handleClick}
+                    />
+                  );
+                })}
+              </g>
+              {totalline}
             </g>
-            {totalline}
-          </g>
-        </svg>
+          </svg>
+        </Scrollbars>
         {tooltip}
       </div>
     );
