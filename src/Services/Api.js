@@ -2,8 +2,8 @@ import axios from "axios";
 import { getToken, renewToken } from "./Auth";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000",
-  headers: { "Content-Type": "application/x-www-form-urlencoded" }
+  //baseURL: "http://localhost:5000",
+  headers: { "Content-Type": "application/json" }
 });
 
 api.interceptors.request.use(async config => {

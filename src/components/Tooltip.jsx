@@ -55,7 +55,17 @@ export class Tooltip extends React.Component {
             <div>
               <span>ItemCusto:</span>
             </div>
-            <p>{this.props.itemCusto}</p>
+            <p>
+              <ul>
+                {this.props.itens.map(function(a, i) {
+                  return (
+                    <li>
+                      {a.itemCusto} - R$ {a.valTot.toLocaleString()}
+                    </li>
+                  );
+                })}
+              </ul>
+            </p>
           </div>
           <div className="card-propertie">
             <div>

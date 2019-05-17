@@ -65,7 +65,7 @@ export class ActionCard extends React.Component {
                   {this.props.itens.map(function(a, i) {
                     return (
                       <li>
-                        {a.itemCusto} - R$ {a.valUn.toLocaleString()}
+                        {a.itemCusto} - R$ {a.valTot.toLocaleString()}
                       </li>
                     );
                   })}

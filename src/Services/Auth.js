@@ -10,16 +10,20 @@ export const login = async (login, pass) => {
 
   const response = await api.post(
     "/api/login",
-    qs.stringify({
+    {
       Login: login,
       Password: pass
-    }),
+    },
     { method: "POST" }
   );
   if (response.data.accessToken) {
     localStorage.setItem(TOKEN_KEY, response.data.accessToken);
     return true;
-  } else return false;
+  } else {
+    localStorage.removeItem(TOKEN_KEY);
+    window.location.href = "/";
+    return false;
+  }
 };
 export const logout = () => {
   localStorage.removeItem(TOKEN_KEY);

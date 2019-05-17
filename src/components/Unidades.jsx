@@ -10,8 +10,7 @@ export class Unidades extends React.Component {
   }
 
   componentDidMount() {
-    api.get("http://localhost:5000/api/unidade").then(res => {
-      console.log(res);
+    api.get("/api/unidade").then(res => {
       if (res) this.setState({ unidades: res.data });
     });
   }

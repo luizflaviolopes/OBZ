@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { ActionCard } from "./ActionCard";
-import { Grid, Fab } from "@material-ui/core";
+import { Grid, Fab, LinearProgress } from "@material-ui/core";
 import { SelectionDisk } from "./SelectionDisk";
 import "../css/svg.css";
 import { FinalStack } from "./FinalStack";
@@ -10,6 +10,7 @@ import Redo from "@material-ui/icons/Redo";
 import ClearAll from "@material-ui/icons/ClearAll";
 import api from "../Services/Api";
 import { Scrollbars } from "react-custom-scrollbars";
+import Axios from "axios";
 
 const styles = theme => ({
   fab: {
@@ -28,17 +29,34 @@ class DynamicSelector extends React.Component {
       initialData: null,
       DataHistory: [{ toSelect: [], selected: [] }],
       Backed: [],
-      ready: false
+      ready: false,
+      toUpdate: false
     };
     this.getLastData = this.getLastData.bind(this);
     this.handleToStack = this.handleToStack.bind(this);
     this.undo = this.undo.bind(this);
     this.redo = this.redo.bind(this);
+    this.sendUpdate = this.sendUpdate.bind(this);
+  }
+
+  sendUpdate() {
+    if (!this.state.toUpdate) return;
+    let history = this.state.DataHistory;
+    api
+      .post("/api/stacks", {
+        unidade: this.props.match.params.un,
+        history: history
+      })
+      .then(x => this.setState({ toUpdate: false }))
+      .catch(error => {
+        console.log(error.response);
+      });
   }
 
   componentWillMount() {
     api.get("/api/stacks?unidade=" + this.props.match.params.un).then(x => {
       if (!x.error) {
+        console.log(x.data.history);
         this.setState({
           initialData: x.data.init,
           DataHistory: x.data.history || [
@@ -54,10 +72,14 @@ class DynamicSelector extends React.Component {
     if (this.state.DataHistory.length > 1) {
       let history = [...this.state.DataHistory];
       let toUndo = history.pop();
-      this.setState({
-        DataHistory: history,
-        Backed: this.state.Backed.concat(toUndo)
-      });
+      this.setState(
+        {
+          DataHistory: history,
+          Backed: this.state.Backed.concat(toUndo),
+          toUpdate: true
+        },
+        () => this.sendUpdate()
+      );
     }
   }
 
@@ -65,7 +87,10 @@ class DynamicSelector extends React.Component {
     if (this.state.Backed.length > 0) {
       const history = this.state.DataHistory;
       let toRedo = this.state.Backed.pop();
-      this.setState({ DataHistory: history.concat(toRedo) });
+      this.setState(
+        { DataHistory: history.concat(toRedo), toUpdate: true },
+        () => this.sendUpdate()
+      );
     }
   }
 
@@ -83,13 +108,25 @@ class DynamicSelector extends React.Component {
 
     if (current.toSelect[item].length === 0) delete current.toSelect[item];
 
-    this.setState({
-      DataHistory: [...this.state.DataHistory, current],
-      Backed: []
-    });
+    this.setState(
+      {
+        DataHistory: [...this.state.DataHistory, current],
+        Backed: [],
+        toUpdate: true
+      },
+      () => this.sendUpdate()
+    );
   }
 
   render() {
+    if (!this.state.ready) {
+      return (
+        <div style={{ width: "100vw", height: "100vh" }}>
+          <LinearProgress />
+        </div>
+      );
+    }
+
     const { classes } = this.props;
     let lastState = this.getLastData();
     let self = this;
