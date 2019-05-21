@@ -11,6 +11,7 @@ import ClearAll from "@material-ui/icons/ClearAll";
 import api from "../Services/Api";
 import { Scrollbars } from "react-custom-scrollbars";
 import Axios from "axios";
+import { DragDropContext } from "react-beautiful-dnd";
 
 const styles = theme => ({
   fab: {
@@ -118,6 +119,8 @@ class DynamicSelector extends React.Component {
     );
   }
 
+  onDragEnd = () => {};
+
   render() {
     if (!this.state.ready) {
       return (
@@ -137,74 +140,76 @@ class DynamicSelector extends React.Component {
     });
 
     return (
-      <Scrollbars style={{ width: "100vw", height: "100vh" }}>
-        <Grid container spacing={0} direction={"row"} className="fullHeigth">
-          <div style={{ position: "fixed", left: 0, top: 0, zIndex: 99999 }}>
-            <Fab
-              variant="extended"
-              size="small"
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              onClick={() => this.props.history.push("/Unidades")}
-            >
-              <ClearAll />
-            </Fab>
-          </div>
-          <Grid item xs={8}>
-            <Grid
-              container
-              spacing={0}
-              className="item-selector"
-              justify="center"
-              direction="row"
-            >
-              <Grid container spacing={16} alignItems="flex-start">
-                {objects.map(function(i, a) {
-                  return (
-                    <ActionCard
-                      {...i}
-                      sendToStack={self.handleToStack}
-                      chave={i.key}
-                    />
-                  );
-                })}
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <Scrollbars style={{ width: "100vw", height: "100vh" }}>
+          <Grid container spacing={0} direction={"row"} className="fullHeigth">
+            <div style={{ position: "fixed", left: 0, top: 0, zIndex: 99999 }}>
+              <Fab
+                variant="extended"
+                size="small"
+                color="primary"
+                aria-label="Add"
+                className={classes.fab}
+                onClick={() => this.props.history.push("/Unidades")}
+              >
+                <ClearAll />
+              </Fab>
+            </div>
+            <Grid item xs={8}>
+              <Grid
+                container
+                spacing={0}
+                className="item-selector"
+                justify="center"
+                direction="row"
+              >
+                <Grid container spacing={16} alignItems="flex-start">
+                  {objects.map(function(i, a) {
+                    return (
+                      <ActionCard
+                        {...i}
+                        sendToStack={self.handleToStack}
+                        chave={i.key}
+                      />
+                    );
+                  })}
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={4}>
-            <Grid
-              container
-              spacing={0}
-              justify="center"
-              direction="column-reverse"
-              className="fullHeigth"
-            >
-              <Grid item xs={12} className="fullHeigth">
-                <FinalStack selecteds={lastState.selected} />
+            <Grid item xs={4}>
+              <Grid
+                container
+                spacing={0}
+                justify="center"
+                direction="column-reverse"
+                className="fullHeigth"
+              >
+                <Grid item xs={12} className="fullHeigth">
+                  <FinalStack selecteds={lastState.selected} />
+                </Grid>
               </Grid>
             </Grid>
+            <div style={{ position: "fixed", right: 0, bottom: 0 }}>
+              <Fab
+                color="primary"
+                aria-label="Add"
+                className={classes.fab}
+                onClick={this.undo}
+              >
+                <Undo />
+              </Fab>
+              <Fab
+                color="primary"
+                aria-label="Add"
+                className={classes.fab}
+                onClick={this.redo}
+              >
+                <Redo />
+              </Fab>
+            </div>
           </Grid>
-          <div style={{ position: "fixed", right: 0, bottom: 0 }}>
-            <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              onClick={this.undo}
-            >
-              <Undo />
-            </Fab>
-            <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              onClick={this.redo}
-            >
-              <Redo />
-            </Fab>
-          </div>
-        </Grid>
-      </Scrollbars>
+        </Scrollbars>
+      </DragDropContext>
     );
   }
 }
