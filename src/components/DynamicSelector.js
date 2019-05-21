@@ -8,6 +8,7 @@ import "../css/svg.css";
 import { FinalStack } from "./FinalStack";
 import Undo from '@material-ui/icons/Undo';
 import Redo from '@material-ui/icons/Redo';
+import { DragDropContext } from 'react-beautiful-dnd'
 
 var d = data;
 window.dados = d;
@@ -73,6 +74,7 @@ class DynamicSelector extends React.Component {
     this.handleToStack = this.handleToStack.bind(this);
     this.undo = this.undo.bind(this);
     this.redo = this.redo.bind(this);
+    this.onDragEnd = this.onDragEnd.bind(this)
   }
 
   undo() {
@@ -109,6 +111,10 @@ class DynamicSelector extends React.Component {
     this.setState({ DataHistory: [...this.state.DataHistory, current], Backed: [] });
   }
 
+  onDragEnd = () => {
+
+  }
+
   render() {
     const { classes } = this.props;
     let lastState = this.getLastData();
@@ -120,50 +126,52 @@ class DynamicSelector extends React.Component {
     });
 
     return (
-      <Grid container spacing={0} direction={"row"} className="fullHeigth">
-        <Grid item xs={8}>
-          <Grid
-            container
-            spacing={0}
-            className="item-selector"
-            justify="center"
-            direction="row"
-          >
-            <Grid container spacing={16} alignItems="flex-start">
-              {objects.map(function (i, a) {
-                return (
-                  <ActionCard
-                    {...i}
-                    sendToStack={self.handleToStack}
-                    chave={i.key}
-                  />
-                );
-              })}
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <Grid container spacing={0} direction={"row"} className="fullHeigth">
+          <Grid item xs={8}>
+            <Grid
+              container
+              spacing={0}
+              className="item-selector"
+              justify="center"
+              direction="row"
+            >
+              <Grid container spacing={16} alignItems="flex-start">
+                {objects.map(function (i, a) {
+                  return (
+                    <ActionCard
+                      {...i}
+                      sendToStack={self.handleToStack}
+                      chave={i.key}
+                    />
+                  );
+                })}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={4}>
-          <Grid
-            container
-            spacing={0}
-            justify="center"
-            direction="column-reverse"
-            className="fullHeigth"
-          >
-            <Grid item xs={12} className="fullHeigth">
-              <FinalStack selecteds={lastState.selected} />>
+          <Grid item xs={4}>
+            <Grid
+              container
+              spacing={0}
+              justify="center"
+              direction="column-reverse"
+              className="fullHeigth"
+            >
+              <Grid item xs={12} className="fullHeigth">
+                <FinalStack selecteds={lastState.selected} />
+            </Grid>
             </Grid>
           </Grid>
+          <div style={{ position: "absolute", right: 0, bottom: 0 }}>
+            <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.undo}>
+              <Undo />
+            </Fab>
+            <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.redo}>
+              <Redo />
+            </Fab>
+          </div>
         </Grid>
-        <div style={{ position: "absolute", right: 0, bottom: 0 }}>
-          <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.undo}>
-            <Undo />
-          </Fab>
-          <Fab color="primary" aria-label="Add" className={classes.fab} onClick={this.redo}>
-            <Redo />
-          </Fab>
-        </div>
-      </Grid>
+      </DragDropContext>
     );
   }
 }
