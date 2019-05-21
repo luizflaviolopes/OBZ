@@ -97,34 +97,36 @@ export class FinalStack extends React.Component {
     return (
       <div style={{ position: "inherit", width: "100%", height: "100vh" }}>
         <Scrollbars style={{ width: "100%", height: "100%" }}>
-          <Droppable droppableId={"droppable"}>
-            {provided => (
-              <Stack provided={provided} innerRef={provided.innerRef}>
-                {this.state.stack.map(function(i, a) {
-                  return (
-                    <Draggable
-                      draggableId={"disk" + i.key}
-                      index={a}
-                      key={"disk" + i.key}
-                    >
-                      {(provided, s) => (
-                        <SelectionDisk
-                          provided={provided}
-                          innerRef={provided.innerRef}
-                          {...i}
-                          snap={s}
-                          position={a}
-                          onDetail={_this.handleclick}
-                        />
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {provided.placeholder}
-                {totalline}
-              </Stack>
-            )}
-          </Droppable>
+          <div style={width:'80%'}>
+            <Droppable droppableId={"droppable"}>
+              {provided => (
+                <Stack provided={provided} innerRef={provided.innerRef}>
+                  {this.state.stack.map(function(i, a) {
+                    return (
+                      <Draggable
+                        draggableId={"disk" + i.key}
+                        index={a}
+                        key={"disk" + i.key}
+                      >
+                        {(provided, s) => (
+                          <SelectionDisk
+                            provided={provided}
+                            innerRef={provided.innerRef}
+                            {...i}
+                            snap={s}
+                            position={a}
+                            onDetail={_this.handleclick}
+                          />
+                        )}
+                      </Draggable>
+                    );
+                  })}
+                  {provided.placeholder}
+                </Stack>
+              )}
+            </Droppable>
+            {totalline}
+          </div>
         </Scrollbars>
         {tooltip}
       </div>
