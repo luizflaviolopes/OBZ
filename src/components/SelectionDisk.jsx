@@ -1,8 +1,10 @@
 import React from "react";
+import { Disk } from "./Disk";
 
 export class SelectionDisk extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       ...this.props,
       textReduced: this.props.detalhamento.substring(0, 30) + "..."

@@ -100,7 +100,7 @@ export class FinalStack extends React.Component {
           <Droppable droppableId={"droppable"}>
             {provided => (
               <Stack provided={provided} innerRef={provided.innerRef}>
-                {this.state.stack.map(function(a, i) {
+                {this.state.stack.map(function(i, a) {
                   return (
                     <Draggable
                       draggableId={"disk" + i.key}

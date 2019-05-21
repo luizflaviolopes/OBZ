@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken, renewToken } from "./Auth";
 
 const api = axios.create({
-  //baseURL: "http://localhost:5000",
+  baseURL: "http://10.33.132.52/",
   headers: { "Content-Type": "application/json" }
 });
 
