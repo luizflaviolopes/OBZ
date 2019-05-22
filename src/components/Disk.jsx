@@ -4,6 +4,8 @@ import React from "react";
 export class Disk extends React.Component {
     constructor(props) {
         super(props);
+
+        
     }
 
 
@@ -11,7 +13,7 @@ export class Disk extends React.Component {
         return (
             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                 width="250px" height="90px" viewBox="0 55 230 90"
-                /*onClick={this.props.onClick}*/>
+                onClick={this.props.onClick}>
                 <g id="layer1" style={{ display: "inline" }}
 
                 >
@@ -48,7 +50,7 @@ export class Disk extends React.Component {
                 </g>
                 <g>
                     <text
-                        fill="black"
+                        fill={this.props.color.text}
                         fillOpacity="1"
                         stroke="none"
                         stroke-opacity="0"

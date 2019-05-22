@@ -27,7 +27,7 @@ export class ActionCard extends React.Component {
               left: "0",
               right: 0,
               margin: "auto",
-              width: "60%",
+              width: "75%",
               padding: "0.7rem"
             }}
           >
@@ -46,9 +46,9 @@ export class ActionCard extends React.Component {
             </div>
             <div className="card-propertie">
               <div>
-                <span>Detalhamento:</span>
+                <span>Classificacao:</span>
               </div>
-              <p>{this.props.detalhamento}</p>
+              <p>{this.props.classificacao}</p>
             </div>
             <div className="card-propertie">
               <div>
@@ -91,7 +91,7 @@ export class ActionCard extends React.Component {
                 size="medium"
                 color="primary"
                 aria-label="Add"
-                onClick={() => this.props.sendToStack(this.props.entrega)}
+                onClick={() => this.props.sendToStack(this.props.grupment)}
               >
                 Selecionar
                 <Send className="button-icon" />

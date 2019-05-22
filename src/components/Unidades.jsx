@@ -26,7 +26,7 @@ export class Unidades extends React.Component {
         className="vertical-center"
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           height: "100vh",
           width: "100vw",
           textAlign: "center",
@@ -34,12 +34,29 @@ export class Unidades extends React.Component {
           alignItems: "center"
         }}
       >
+        <div  style={{    display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'end',}}>
         {this.state.unidades.map(function(a, i) {
           return (
-            <Chip
+              <div
+              onClick={() => _this.handleClick(a.sigla)}
+              style={{border:'1px solid steelblue', borderRadius:'10px', overflow:'hidden', margin:'5px', cursor:'pointer'}}
+              >
+<div style={{background:'steelblue', display:'inline-block', padding:'5px'}}><span>{a.sigla}</span></div>
+  <div style={{display:'inline-block', padding:'5px'}}><span>{a.nome}</span></div>
+
+              </div>
+
+
+
+            /*<Chip
               avatar={
                 <Avatar style={{ width: "auto", minWidth: "2rem" }}>
-                  {a.sigla}
+                  
                 </Avatar>
               }
               label={a.nome}
@@ -50,9 +67,10 @@ export class Unidades extends React.Component {
               variant="outlined"
               style={{ margin: "0.5rem" }}
               onClick={() => _this.handleClick(a.sigla)}
-            />
+            />*/
           );
         })}
+        </div>
       </div>
     );
   }

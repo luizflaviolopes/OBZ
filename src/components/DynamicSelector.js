@@ -12,6 +12,7 @@ import api from "../Services/Api";
 import { Scrollbars } from "react-custom-scrollbars";
 import Axios from "axios";
 import { DragDropContext } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 
 const styles = theme => ({
   fab: {
@@ -103,9 +104,8 @@ class DynamicSelector extends React.Component {
     let history = this.state.DataHistory;
     let c = history[history.length - 1];
     let current = JSON.parse(JSON.stringify(c));
-
     let toStack = current.toSelect[item].shift();
-    current.selected = [...current.selected, toStack];
+    current.selected = [toStack, ...current.selected];
 
     if (current.toSelect[item].length === 0) delete current.toSelect[item];
 
@@ -119,7 +119,55 @@ class DynamicSelector extends React.Component {
     );
   }
 
-  onDragEnd = () => {};
+  onDragEnd = (result) => {
+    console.log (result)
+    if(result.destination.droppableId == 'discarted')
+    {let history = this.state.DataHistory;
+      let c = history[history.length - 1];
+      let current = JSON.parse(JSON.stringify(c));
+  
+      let stack = current.selected;
+  
+      let toMove = stack.splice(result.source.index,1);
+        
+    current.selected = stack;
+  
+      this.setState(
+        {
+          DataHistory: [...this.state.DataHistory, current],
+          Backed: [],
+          toUpdate: true
+        },
+        () => this.sendUpdate()
+      );
+    }
+    else
+    {
+
+    let history = this.state.DataHistory;
+    let c = history[history.length - 1];
+    let current = JSON.parse(JSON.stringify(c));
+
+    let stack = current.selected;
+
+    let toMove = stack.splice(result.source.index,1);
+    
+    let newStack = stack.splice(result.destination.index,0,toMove[0]);
+
+  current.selected = stack;
+
+    this.setState(
+      {
+        DataHistory: [...this.state.DataHistory, current],
+        Backed: [],
+        toUpdate: true
+      },
+      () => this.sendUpdate()
+    );
+    }
+  
+  
+  };
 
   render() {
     if (!this.state.ready) {
@@ -155,7 +203,10 @@ class DynamicSelector extends React.Component {
                 <ClearAll />
               </Fab>
             </div>
-            <Grid item xs={8}>
+            <Grid item xs={8} >
+            <Droppable droppableId={"discarted"}>
+              {provided => (
+                <div {...provided.droppableProps} ref={provided.innerRef} style={{height:'100%'}}>
               <Grid
                 container
                 spacing={0}
@@ -175,7 +226,12 @@ class DynamicSelector extends React.Component {
                   })}
                 </Grid>
               </Grid>
+              </div>
+              )}
+              </Droppable>
             </Grid>
+            
+            
             <Grid item xs={4}>
               <Grid
                 container

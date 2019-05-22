@@ -9,6 +9,7 @@ export class Tooltip extends React.Component {
   }
 
   render() {
+    let dim = this.props.element.getBoundingClientRect();
     return (
       <Grid item className="card-decision">
         <div className="backdrop" onClick={this.props.onClose} />
@@ -16,9 +17,8 @@ export class Tooltip extends React.Component {
           elevation={1}
           style={{
             position: "absolute",
-            top: this.props.element.getBoundingClientRect().y,
-            left: "0",
-            right: 0,
+            top: dim.y,
+            right: window.innerWidth-dim.x+30,
             margin: "auto",
             width: "60%",
             padding: "0.7rem",
@@ -40,11 +40,11 @@ export class Tooltip extends React.Component {
             <p>{this.props.entrega}</p>
           </div>
           <div className="card-propertie">
-            <div>
-              <span>Detalhamento:</span>
+              <div>
+                <span>Classificacao:</span>
+              </div>
+              <p>{this.props.classificacao}</p>
             </div>
-            <p>{this.props.detalhamento}</p>
-          </div>
           <div className="card-propertie">
             <div>
               <span>Justificativa:</span>
@@ -77,7 +77,7 @@ export class Tooltip extends React.Component {
             <div>
               <span>PrecoTotal:</span>
             </div>
-            <p>{this.props.precoTotal}</p>
+            <p>{this.props.valorTotal.toLocaleString()}</p>
           </div>
           <hr />
           <div className="card-footer" />

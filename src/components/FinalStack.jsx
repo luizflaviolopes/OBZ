@@ -18,8 +18,8 @@ export class FinalStack extends React.Component {
   }
 
   handleClick(obj, elem) {
-    window.teste = elem;
     let newParams = { element: elem, ...obj };
+    console.log(newParams);
     this.setState({ tooltipParams: newParams });
   }
 
@@ -40,41 +40,41 @@ export class FinalStack extends React.Component {
 
     if (nStackItens > 0) {
       let soma = this.state.stack.reduce((a, b) => a + b.valorTotal, 0);
-      let h = 50 + nStackItens * 48;
+      let h = 20 +nStackItens * 48;
 
       totalline = (
         <svg
-          style={{ position: "absolute", top: 0, right: 0 }}
-          viewBox={"20 0 100 " + h}
+
+          viewBox={"0 0 100 " + h}
           height={h}
         >
           <g>
             <line
-              x1="100"
-              y1="0"
-              x2="100"
+              x1="10"
+              y1="10"
+              x2="10"
               y2={h}
               style={{ stroke: "rgb(0,0,0)", strokeWidth: 2 }}
             />
             <line
-              x1="250"
-              y1="130"
-              x2="240"
-              y2="130"
+              x1="0"
+              y1="10"
+              x2="10"
+              y2="10"
               style={{ stroke: "rgb(0,0,0)", strokeWidth: 2 }}
             />
             <line
-              x1="250"
-              y1={120 - nStackItens * 50}
-              x2="240"
-              y2={120 - nStackItens * 50}
+              x1='0'
+              y1={h}
+              x2="10"
+              y2={h}
               style={{ stroke: "rgb(0,0,0)", strokeWidth: 2 }}
             />
             <text
               fill="black"
               fillOpacity="1"
-              x="270"
-              y={130 - nStackItens * 25}
+              x="20"
+              y={h/2}
               textAnchor="left"
               text-decoration="none"
               rotate="0"
@@ -97,7 +97,7 @@ export class FinalStack extends React.Component {
     return (
       <div style={{ position: "inherit", width: "100%", height: "100vh" }}>
         <Scrollbars style={{ width: "100%", height: "100%" }}>
-          <div style={width:'80%'}>
+          <div style={{display:'flex', justifyContent:'center', position:'absolute', margin:'auto', paddingBottom:'20px', width:'100%', top: ((40 - nStackItens*2) > 5 ?(40 - nStackItens*2): 5)+'%' }}>
             <Droppable droppableId={"droppable"}>
               {provided => (
                 <Stack provided={provided} innerRef={provided.innerRef}>
@@ -115,7 +115,7 @@ export class FinalStack extends React.Component {
                             {...i}
                             snap={s}
                             position={a}
-                            onDetail={_this.handleclick}
+                            onDetail={_this.handleClick}
                           />
                         )}
                       </Draggable>

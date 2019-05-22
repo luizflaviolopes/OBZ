@@ -11,7 +11,7 @@ export class Stack extends React.Component {
       <div
         {...provided.droppableProps}
         ref={innerRef}
-        style={{ position: "relative", marginTop: "10%" }}
+        style={{ alignSelf:'center', width:'250px',marginTop: '50px', paddingRight:'10px' }}
         /*style={{ display: 'flex', flexDirection: 'column-reverse' }}*/
       >
         {this.props.children}
