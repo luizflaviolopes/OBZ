@@ -28,12 +28,13 @@ export class ActionCard extends React.Component {
               right: 0,
               margin: "auto",
               width: "75%",
-              padding: "0.7rem"
+              padding: "0.7rem",
+              zIndex:2,
             }}
           >
             <div
               className="card-header"
-              style={{ backgroundColor: this.props.color.fill }}
+              style={{ backgroundColor: this.props.color.fill, color: this.props.color.text }}
             >
               <h2>{this.props.unAdm}</h2>
             </div>
@@ -105,7 +106,7 @@ export class ActionCard extends React.Component {
           >
             <div
               className="card-header"
-              style={{ backgroundColor: this.props.color.fill }}
+              style={{ backgroundColor: this.props.color.fill, color: this.props.color.text }}
             >
               <h4>{this.props.unAdm}</h4>
             </div>
@@ -125,15 +126,18 @@ export class ActionCard extends React.Component {
             onClick={this.handleClickToggle}
             className="card-content"
           >
+            <div className="card-tab" style={{color:this.props.color.fill}}>
+            {this.props.unAdm}
+            </div>
             <div
               className="card-header"
-              style={{ backgroundColor: this.props.color.fill }}
+              style={{ backgroundColor: this.props.color.fill, color: this.props.color.text }}
             >
-              <h4>{this.props.unAdm}</h4>
+              <h4>{this.props.entrega}</h4>
             </div>
 
             <div className="card-body">
-              <p>{this.props.entrega}</p>
+              <p>{this.props.resumo}</p>
               <p>{this.props.valorTotal.toLocaleString()}</p>
             </div>
           </Paper>

@@ -121,27 +121,7 @@ class DynamicSelector extends React.Component {
 
   onDragEnd = (result) => {
     console.log (result)
-    if(result.destination.droppableId == 'discarted')
-    {let history = this.state.DataHistory;
-      let c = history[history.length - 1];
-      let current = JSON.parse(JSON.stringify(c));
-  
-      let stack = current.selected;
-  
-      let toMove = stack.splice(result.source.index,1);
-        
-    current.selected = stack;
-  
-      this.setState(
-        {
-          DataHistory: [...this.state.DataHistory, current],
-          Backed: [],
-          toUpdate: true
-        },
-        () => this.sendUpdate()
-      );
-    }
-    else
+    if(result.destination)
     {
 
     let history = this.state.DataHistory;
@@ -204,9 +184,6 @@ class DynamicSelector extends React.Component {
               </Fab>
             </div>
             <Grid item xs={8} >
-            <Droppable droppableId={"discarted"}>
-              {provided => (
-                <div {...provided.droppableProps} ref={provided.innerRef} style={{height:'100%'}}>
               <Grid
                 container
                 spacing={0}
@@ -226,9 +203,6 @@ class DynamicSelector extends React.Component {
                   })}
                 </Grid>
               </Grid>
-              </div>
-              )}
-              </Droppable>
             </Grid>
             
             
