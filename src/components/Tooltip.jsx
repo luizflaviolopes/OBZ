@@ -22,7 +22,8 @@ export class Tooltip extends React.Component {
             margin: "auto",
             width: "60%",
             padding: "0.7rem",
-            transform: "translateY(-40%)"
+            transform: "translateY(-40%)",
+            zIndex: 1005,
           }}
           className="tooltip"
         >
@@ -60,7 +61,7 @@ export class Tooltip extends React.Component {
                 {this.props.itens.map(function(a, i) {
                   return (
                     <li>
-                      {a.itemCusto} - R$ {a.valTot.toLocaleString()}
+                      {a.itemCusto} - R$ {isNaN(a.valTot)? "indefinido": parseFloat(a.valTot).toLocaleString()}
                     </li>
                   );
                 })}
@@ -77,7 +78,7 @@ export class Tooltip extends React.Component {
             <div>
               <span>PrecoTotal:</span>
             </div>
-            <p>{this.props.valorTotal.toLocaleString()}</p>
+            <p>R$ {isNaN(this.props.valorTotal)? "indefinido": parseFloat(this.props.valorTotal).toLocaleString()}</p>
           </div>
           <hr />
           <div className="card-footer" />

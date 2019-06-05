@@ -7,6 +7,7 @@ import "../css/svg.css";
 import { FinalStack } from "./FinalStack";
 import Undo from "@material-ui/icons/Undo";
 import Redo from "@material-ui/icons/Redo";
+import Save from "@material-ui/icons/Save";
 import ClearAll from "@material-ui/icons/ClearAll";
 import api from "../Services/Api";
 import { Scrollbars } from "react-custom-scrollbars";
@@ -39,16 +40,22 @@ class DynamicSelector extends React.Component {
     this.undo = this.undo.bind(this);
     this.redo = this.redo.bind(this);
     this.sendUpdate = this.sendUpdate.bind(this);
+    this.save = this.save.bind(this);
   }
 
-  sendUpdate() {
+  sendUpdate(undo) {
     if (!this.state.toUpdate) return;
-    let history = this.state.DataHistory;
+
+    let objToBack = {
+      unidade: this.props.match.params.un,
+    }
+    if(undo)
+    objToBack.undo = true;
+    else
+    objToBack.history= this.getLastData();
+
     api
-      .post("/api/stacks", {
-        unidade: this.props.match.params.un,
-        history: history
-      })
+      .post("/api/stacks", objToBack)
       .then(x => this.setState({ toUpdate: false }))
       .catch(error => {
         console.log(error.response);
@@ -67,7 +74,7 @@ class DynamicSelector extends React.Component {
           ready: true
         });
       }
-    });
+    }).catch(x=> this.props.history.push('/'))
   }
 
   undo() {
@@ -80,7 +87,7 @@ class DynamicSelector extends React.Component {
           Backed: this.state.Backed.concat(toUndo),
           toUpdate: true
         },
-        () => this.sendUpdate()
+        () => this.sendUpdate(true)
       );
     }
   }
@@ -93,6 +100,22 @@ class DynamicSelector extends React.Component {
         { DataHistory: history.concat(toRedo), toUpdate: true },
         () => this.sendUpdate()
       );
+    }
+  }
+
+  save() {
+    if (this.state.DataHistory.length > 1) {
+      this.setState({ saving: true })
+      let lastHistory = this.state.DataHistory[this.state.DataHistory.length -1];
+      api
+      .post("/api/save", {
+        unidade: this.props.match.params.un,
+        state: lastHistory
+      })
+      .then(x => this.setState({ saving: false }))
+      .catch(error => {
+        console.log(error.response);
+      });
     }
   }
 
@@ -167,8 +190,24 @@ class DynamicSelector extends React.Component {
       objects.push(lastState.toSelect[i][0]);
     });
 
+      let saving;
+    if (this.state.saving) {
+      saving =  (
+        <div style={{ width: "100vw", height: "100vh", backgroundColor: "rgba(128, 128, 128, 0.336)",
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1001 }}>
+          <LinearProgress />
+        </div>
+      );
+    }
+
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
+        {saving}
         <Scrollbars style={{ width: "100vw", height: "100vh" }}>
           <Grid container spacing={0} direction={"row"} className="fullHeigth">
             <div style={{ position: "fixed", left: 0, top: 0, zIndex: 99999 }}>
@@ -197,7 +236,8 @@ class DynamicSelector extends React.Component {
                       <ActionCard
                         {...i}
                         sendToStack={self.handleToStack}
-                        chave={i.key}
+                        chave={i.key+i.unAdm}
+                        key={i.key+i.unAdm}
                       />
                     );
                   })}
@@ -219,10 +259,10 @@ class DynamicSelector extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-            <div style={{ position: "fixed", right: 0, bottom: 0 }}>
+            <div style={{ position: "fixed", right: 0, bottom: 0, zIndex: 1100 }}>
               <Fab
                 color="primary"
-                aria-label="Add"
+                aria-label="Undo"
                 className={classes.fab}
                 onClick={this.undo}
               >
@@ -230,11 +270,19 @@ class DynamicSelector extends React.Component {
               </Fab>
               <Fab
                 color="primary"
-                aria-label="Add"
+                aria-label="Redo"
                 className={classes.fab}
                 onClick={this.redo}
               >
                 <Redo />
+              </Fab>
+              <Fab
+                color="primary"
+                aria-label="Save"
+                className={classes.fab}
+                onClick={this.save}
+              >
+                <Save />
               </Fab>
             </div>
           </Grid>

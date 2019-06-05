@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { isAuthenticated, logout } from "../Services/Auth";
 import Login from "./Login";
-import { Unidades } from "./Unidades";
+import Unidades from "./Unidades";
 import DynamicSelector from "./DynamicSelector";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (

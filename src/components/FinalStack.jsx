@@ -39,7 +39,7 @@ export class FinalStack extends React.Component {
     }
 
     if (nStackItens > 0) {
-      let soma = this.state.stack.reduce((a, b) => a + b.valorTotal, 0);
+      let soma = this.state.stack.reduce((a, b) => a + (isNaN(b.valorTotal)?0:parseFloat(b.valorTotal) ), 0);
       let h = 20 +nStackItens * 48;
 
       totalline = (
@@ -104,9 +104,9 @@ export class FinalStack extends React.Component {
                   {this.state.stack.map(function(i, a) {
                     return (
                       <Draggable
-                        draggableId={"disk" + i.key}
+                        draggableId={"disk" + i.key+i.unAdm}
                         index={a}
-                        key={"disk" + i.key}
+                        key={"disk" + i.key+i.unAdm}
                       >
                         {(provided, s) => (
                           <SelectionDisk
