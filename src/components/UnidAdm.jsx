@@ -11,9 +11,7 @@ export class UnidAdm extends React.Component {
   componentDidMount(){
     if(!this.props.dummie)
     {
-    var rect = ReactDOM.findDOMNode(this.chip.current)
-    .getBoundingClientRect()
-    this.props.obj.pos = rect;
+    this.props.obj.dom = ReactDOM.findDOMNode(this.chip.current);
     }
   }
 
@@ -33,15 +31,14 @@ export class UnidAdm extends React.Component {
     const {onClick, sigla, nome} = this.props;
 
     return (
-      <div style={{display: 'flex',
-      alignItems: 'center'}} onMouseEnter={()=>this.setState({show:'none'})} onMouseLeave={()=>this.setState({show:'flex'})}>
+      <div style={{display: 'flex', justifyContent:'center', marginTop:'2rem'}} onMouseEnter={()=>this.setState({show:'none'})} onMouseLeave={()=>this.setState({show:'flex'})}>
         <div
         ref={this.chip}
         onClick={() => onClick(sigla)}
-        style={{border:'1px solid steelblue', borderRadius:'10px', overflow:'hidden', margin:'5px', cursor:'pointer', position:'relative', width:'10rem', height:'6rem'}}
+        style={{border:'1px solid steelblue', borderRadius:'10px', overflow:'hidden', margin:'5px', cursor:'pointer', position:'relative', width:'8rem', height:'5rem'}}
         >
         <div style={{background:'steelblue', display:'inline-block', position: 'absolute', width: '100%', height: '100%', display:this.state.show, alignItems:'center', justifyContent:'center', fontFamily:'Calibri', fontWeight:700, fontSize:'larger'}}><span>{sigla}</span></div>
-        <div style={{display:'inline-block', height:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}><span>{nome}</span></div>
+        <div style={{display:'inline-block', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'small'}}><span>{nome}</span></div>
         </div>
         </div>
     );

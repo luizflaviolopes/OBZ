@@ -6,8 +6,30 @@ export class Connector extends React.Component {
     super(props);
     this.state = {}
   }
-  componentDidMount(){
-    const {start, end} = this.props
+  componentDidUpdate(){
+    console.log("upd");
+  }
+
+  resize = () => {
+    this.forceUpdate();
+    }
+    componentDidMount(){
+      window.addEventListener('resize', this.resize)
+    }
+        
+    componentWillUnmount() {
+      window.removeEventListener('resize', this.resize)
+    }
+
+  render() {
+
+    const {starta, enda} = this.props
+
+    let start = starta
+    .getBoundingClientRect();
+
+    let end = enda
+    .getBoundingClientRect()
 
     let positions = {
       x1: start.x + start.width/2,
@@ -25,18 +47,10 @@ export class Connector extends React.Component {
     linePoint.push({x:positions.x1,y:positions.y1+middle});
     linePoint.push({x:positions.x2,y:positions.y1+middle});
     linePoint.push({x:positions.x2,y:positions.y2});
-
-  this.setState({...positions, linePoints: linePoint, startPoint: startPoint, ready: true});
-}
-
-  render() {
     
-    if(!this.state.ready)
-    return null;
-
     return (
 
-            <path  d={'M '+ this.state.startPoint.x + ' ' + this.state.startPoint.y  + this.state.linePoints.reduce((a,b) =>{return a + ' L'+ b.x + ' ' + b.y },'') } style={{stroke:"steelblue",strokeWidth:2, fill: 'none'}}  />
+            <path  d={'M '+ startPoint.x + ' ' + startPoint.y  + linePoint.reduce((a,b) =>{return a + ' L'+ b.x + ' ' + b.y },'') } style={{stroke:"steelblue",strokeWidth:2, fill: 'none'}}  />
     );
   }
 }

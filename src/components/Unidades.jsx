@@ -30,11 +30,7 @@ class Unidades extends React.Component {
   componentDidUpdate(prevProps, prevState){
     if(this.state.ready)
     {
-    let _connects = this.state.connections;
-    _connects.forEach(a=>{
-      a.filhoPos = a.filho.pos; 
-      a.paiPos = a.pai.pos})
-    this.setState({connections: _connects, ready:false})
+    this.setState({ready:false})
     }
   }
   
@@ -98,6 +94,8 @@ class Unidades extends React.Component {
     });
   }
 
+
+
   handleClick(un) {
     this.props.history.push("/Stack/" + un);
   }
@@ -138,6 +136,28 @@ class Unidades extends React.Component {
     let _this = this;
     const { classes } = this.props;
     let modal;
+
+    let renderChildrens = un =>{
+      if(un.childrens)
+      {
+        return(
+        <div>
+          <UnidAdm onClick={_this.handleClick} sigla={un.sigla} nome={un.nome} obj={un} key={un.sigla}/>
+          <div style={{display:'flex', flexDirection:'row'}}>
+            {un.childrens.map(a => renderChildrens(a))}
+          </div>
+        </div>)
+      }
+      else
+      {
+        return (
+        <div>
+        <UnidAdm onClick={_this.handleClick} sigla={un.sigla} nome={un.nome} obj={un} key={un.sigla}/>
+        </div>
+        )
+      }
+
+    }
 
     
 
@@ -218,14 +238,13 @@ class Unidades extends React.Component {
           height: "100vh",
           width: "100vw",
           textAlign: "center",
-          justifyContent: "center",
-          alignItems: "center"
+          justifyContent: "center"
         }}
       >
         <div  style={{display: 'flex', height:'100%',alignItems:'center',
     }}>
 
-      {this.state.estrutura.map(strut =>{
+     {/* {this.state.estrutura.map(strut =>{
         return(
 
         <div style={{ display:'flex', flexDirection:'column', alignItems:'center'}}>
@@ -235,7 +254,7 @@ class Unidades extends React.Component {
       <div style={{display:'flex', minHeight:'1rem', verticalAlign:'middle', marginBottom: '4rem'}}>
 
         {nivel.length > 0 ?nivel.map((un,i) =>{
-          return (<UnidAdm onClick={_this.handleClick} sigla={un.sigla} nome={un.nome} obj={un} key={un.sigla}/>)
+          return (<UnidAdm onClick={_this.handleClick} sigla={un.sigla} nome={un.nome} obj={un} key={un.sigla} chil={un.childrens? un.childrens.length:0}/>)
 
         }): <UnidAdm dummie='true'/>}
 
@@ -247,6 +266,14 @@ class Unidades extends React.Component {
 
         );
       })}
+*/}
+
+{this.state.estrutura.length > 0 ? this.state.estrutura[0][0].map(a =>
+{
+  return renderChildrens(a);
+}
+
+): null}
 
         
       </div>
@@ -264,12 +291,12 @@ class Unidades extends React.Component {
             </div>
 
 
-            <svg style={{position:'absolute', top:0, left:0, zIndex:'-1'}} width={'100%'} height={'100%'} >
+            <svg style={{position:'absolute', top:0, left:0, zIndex:'-1', overflow:'visible'}} width={'100%'} height={'100%'} >
         {this.state.connections.map(a=>{
-          if(!a.filhoPos || !a.paiPos)
+          if(!a.filho.dom || !a.pai.dom)
           return null;
           return(
-            <Connector start={a.filhoPos} end={a.paiPos} />
+            <Connector starta={a.filho.dom} enda={a.pai.dom} />
           )
 
         })}

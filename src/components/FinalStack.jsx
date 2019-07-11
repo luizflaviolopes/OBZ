@@ -87,7 +87,10 @@ export class FinalStack extends React.Component {
               font-size="12px"
               fontFamily="arial,helvetica,sans-serif"
             >
-              {soma.toLocaleString()}
+              {soma.toLocaleString(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})}
             </text>
           </g>
         </svg>

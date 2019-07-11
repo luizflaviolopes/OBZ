@@ -61,7 +61,10 @@ export class Tooltip extends React.Component {
                 {this.props.itens.map(function(a, i) {
                   return (
                     <li>
-                      {a.itemCusto} - R$ {isNaN(a.valTot)? "indefinido": parseFloat(a.valTot).toLocaleString()}
+                      {a.itemCusto} - R$ {isNaN(a.valTot)? "indefinido": parseFloat(a.valTot).toLocaleString(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})}
                     </li>
                   );
                 })}
@@ -78,7 +81,10 @@ export class Tooltip extends React.Component {
             <div>
               <span>PrecoTotal:</span>
             </div>
-            <p>R$ {isNaN(this.props.valorTotal)? "indefinido": parseFloat(this.props.valorTotal).toLocaleString()}</p>
+            <p>R$ {isNaN(this.props.valorTotal)? "indefinido": parseFloat(this.props.valorTotal).toLocaleString(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})}</p>
           </div>
           <hr />
           <div className="card-footer" />

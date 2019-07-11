@@ -72,7 +72,10 @@ export class ActionCard extends React.Component {
                   {this.props.itens.map(function(a, i) {
                     return (
                       <li>
-                        {a.itemCusto} - R$ {isNaN(a.valTot)? "indefinido": parseFloat(a.valTot).toLocaleString()}
+                        {a.itemCusto} - R$ {isNaN(a.valTot)? "indefinido": parseFloat(a.valTot).toLocaleString(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})}
                       </li>
                     );
                   })}
@@ -84,7 +87,10 @@ export class ActionCard extends React.Component {
               <div>
                 <span>PrecoTotal:</span>
               </div>
-              <p>R$ {isNaN(this.props.valorTotal)? "indefinido": parseFloat(this.props.valorTotal).toLocaleString()}</p>
+              <p>R$ {isNaN(this.props.valorTotal)? "indefinido": parseFloat(this.props.valorTotal).toLocaleString(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})}</p>
             </div>
             <hr />
             <div className="card-footer">
@@ -114,7 +120,10 @@ export class ActionCard extends React.Component {
 
             <div className="card-body">
               <p>{this.props.entrega}</p>
-              <p>R$ {isNaN(this.props.valorTotal)? "indefinido": parseFloat(this.props.valorTotal).toLocaleString()}</p>
+              <p>R$ {isNaN(this.props.valorTotal)? "indefinido": parseFloat(this.props.valorTotal).toLocaleString(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})}</p>
             </div>
           </Paper>
         </Grid>
@@ -139,7 +148,10 @@ export class ActionCard extends React.Component {
 
             <div className="card-body">
               <p>{this.props.resumo}</p>
-              <p>R$ {isNaN(this.props.valorTotal)? "indefinido": parseFloat(this.props.valorTotal).toLocaleString()}</p>
+              <p>R$ {isNaN(this.props.valorTotal)? "indefinido": parseFloat(this.props.valorTotal).toLocaleString(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})}</p>
             </div>
           </Paper>
         </Grid>
