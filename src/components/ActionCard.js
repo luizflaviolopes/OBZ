@@ -36,7 +36,7 @@ export class ActionCard extends React.Component {
               className="card-header"
               style={{ backgroundColor: this.props.color.fill, color: this.props.color.text }}
             >
-              <h2>{this.props.unAdm}</h2>
+              <h2>{this.props.unStack || this.props.unAdm}</h2>
             </div>
             <hr />
             <div className="card-propertie">
@@ -115,7 +115,7 @@ export class ActionCard extends React.Component {
               className="card-header"
               style={{ backgroundColor: this.props.color.fill, color: this.props.color.text }}
             >
-              <h4>{this.props.unAdm}</h4>
+              <h4>{this.props.unStack || this.props.unAdm}</h4>
             </div>
 
             <div className="card-body">
@@ -137,7 +137,7 @@ export class ActionCard extends React.Component {
             className="card-content"
           >
             <div className="card-tab" style={{color:this.props.color.fill}}>
-            {this.props.unAdm}
+            {this.props.unStack || this.props.unAdm}
             </div>
             <div
               className="card-header"

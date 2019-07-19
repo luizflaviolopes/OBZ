@@ -31,7 +31,7 @@ export class Tooltip extends React.Component {
             className="card-header"
             style={{ backgroundColor: this.props.color.fill }}
           >
-            <h2>{this.props.unAdm}</h2>
+            <h2>{this.props.unStack || this.props.unAdm}</h2>
           </div>
           <hr />
           <div className="card-propertie">
